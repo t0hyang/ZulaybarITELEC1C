@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    
+    DateTime date = DateTime.Now;
+    string period;
+
+    if (date.Hour >= 6 && date.Hour < 12)
+    {
+        period = "morning";
+    }
+    else if (date.Hour >= 12 && date.Hour < 18)
+    {
+        period = "afternoon";
+    }
+    else
+    {
+        period = "evening";
+    }
+
+    string formattedDate = date.ToString("dddd, MMMM d");
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome, CICS</h1>
+    <p class="index-text">It is now @period on @formattedDate</p>
+</div>
