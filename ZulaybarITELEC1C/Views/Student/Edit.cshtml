@@ -1,0 +1,40 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model StudentModel;
+
+<h1>Edit Student</h1>
+
+<form asp-action="Edit" method="post">
+    <div class="form-group">
+        <label asp-for="Id">ID</label>
+        <input asp-for="Id" class="form-control" />
+
+    </div>
+    <div class="form-group">
+        <label asp-for="FirstName">First Name</label>
+        <input asp-for="FirstName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName">Last Name</label>
+        <input asp-for="LastName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email">Email</label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Major">Major</label>
+        <select asp-for="Major" asp-items="Html.GetEnumSelectList(typeof(Major))" class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Birthday">Birthday</label>
+        <input asp-for="Birthday" class="form-control" />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="button" class="btn btn-secondary" onclick="history.back();">Cancel</button>
+
+</form>

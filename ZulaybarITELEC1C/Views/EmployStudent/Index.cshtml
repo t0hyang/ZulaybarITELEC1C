@@ -1,0 +1,65 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+    ViewData["Title"] = "Employee Student";
+    //EmployeeStatus//
+    //Employee Variables
+    string FirstName = "Kirsten Faye";
+    string LastName = "Zulaybar";
+    DateTime Birthday = new DateTime(2002, 03, 30);
+    bool IsTenured = false;
+    decimal SalaryPerHour = 120;
+    string Email = "kirstenfaye.zulaybar.cics@ust.edu.ph";
+
+    //Age
+    int age = DateTime.Now.Year - Birthday.Year;
+
+    //Email
+    string[] emailParts = Email.Split('@');
+    string Username = emailParts[0];
+    string Domain = emailParts[1];
+
+    //Salary
+    decimal SalaryPerDay = SalaryPerHour * 8;
+    decimal SalaryPerMonth = SalaryPerDay * 30;
+
+    if (IsTenured)
+    {
+        SalaryPerMonth += 500;
+    }
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/employstudent.css" asp-append-version="true" />
+    <title>Machine Problem 1</title>
+</head>
+<body>
+    <div>
+<!--SAMPLE OUTPUT 1-->
+        <h3>I'm @FirstName @LastName and I'm @age yrs. old</h3>
+    </div>  
+    <br /><br>
+<!--SAMPLE OUTPUT 2-->
+    <div>
+ 
+        <p>EMAIL: @Email</p>
+        <p>DOMAIN: @Domain</p>
+        <p>Username: @Username</p>
+    </div>
+    <br /><br />
+ <!--SAMPLE OUTPUT 3-->
+    <div>
+        <p>NAME: @FirstName @LastName</p>
+        <p>EMAIL: @Email</p>
+        <p>STATUS: @(IsTenured ? "Permanent" : "Probationary")</p>
+        <p>DAILY SALARY: $@SalaryPerDay</p>
+        <p>MONTHLY SALARY: $@SalaryPerMonth</p>
+    </div>
+    <br /><br />
+</body>
+</html>

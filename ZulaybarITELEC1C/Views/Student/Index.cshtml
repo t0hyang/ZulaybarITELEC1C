@@ -1,0 +1,109 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var Name = "Kirsten Faye Zulaybar";
+    var Email = "kirstenfaye.zulaybar.cics@ust.edu.ph";
+    DateTime Birthday = DateTime.Parse("30/03/2002");
+    var PrelimGrade = 90;
+    var FinalGrade = 95;
+    var SemGrade = (PrelimGrade + FinalGrade) / 2;
+    var TransmutedGrade = "";
+
+    if (SemGrade >= 96)
+    {
+        TransmutedGrade = "1.00";
+    }
+    else if (SemGrade >= 94)
+    {
+        TransmutedGrade = "1.25";
+    }
+    else if (SemGrade >= 92)
+    {
+        TransmutedGrade = "1.50";
+    }
+    else if (SemGrade >= 89)
+    {
+        TransmutedGrade = "1.75";
+    }
+    else if (SemGrade >= 87)
+    {
+        TransmutedGrade = "2.00";
+    }
+    else if (SemGrade >= 84)
+    {
+        TransmutedGrade = "2.25";
+    }
+    else if (SemGrade >= 82)
+    {
+        TransmutedGrade = "2.50";
+    }
+    else if (SemGrade >= 79)
+    {
+        TransmutedGrade = "2.75";
+    }
+    else if (SemGrade >= 75)
+    {
+        TransmutedGrade = "3.00";
+    }
+    else
+    {
+        TransmutedGrade = "5.00";
+    }
+}
+
+
+<h1>Student View</h1>
+    <table border="1" class="table">
+        <tr>
+            <td>Name</td>
+            <td>@Name</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>@Email</td>
+        </tr>
+        <tr>
+            <td>Prelim</td>
+            <td>@PrelimGrade</td>
+        </tr>
+        <tr>
+            <td>Final</td>
+            <td>@FinalGrade</td>
+        </tr>
+        <tr>
+            <td>Sem Grade</td>
+            <td>@SemGrade</td>
+        </tr>
+        <tr>
+            <td>Transmuted Grade</td>
+            <td>@TransmutedGrade</td>
+
+        </tr>
+
+</table>
+<br />
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Birthday</th>
+        <th>Major</th>
+        <th>Details</th>
+        <th>Edit</th>
+    </tr>
+
+    @foreach (var student in Model)
+    {
+        <tr>
+            <td>@student.FirstName @student.LastName</td>
+            <td>@student.Email</td>
+            <td>@student.Birthday</td>
+            <td>@student.Major</td>
+            <td><a asp-action="ShowDetails" asp-route-id="@student.Id">Show Details</a></td>
+            <td><a asp-action="Edit" asp-route-id="@student.Id">Edit</a></td>
+        </tr>
+    }
+
+</table>
+<a class="btn btn-primary" asp-action="AddStudent">Add Student</a>

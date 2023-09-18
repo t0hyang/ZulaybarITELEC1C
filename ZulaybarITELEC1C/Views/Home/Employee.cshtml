@@ -1,0 +1,83 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+    ViewData["Title"] = "Employee Student";
+    //EmployeeStatus//
+
+    //Employee Variables
+    string FirstName = "Kirsten Faye";
+    string LastName = "Zulaybar";
+    DateTime Birthday = new DateTime(2002, 03, 30);
+    bool IsTenured = false;
+    decimal SalaryPerHour = 120;
+    string Email = "kirstenfaye.zulaybar.cics@ust.edu.ph";
+
+    //Age
+    int age = DateTime.Now.Year - Birthday.Year;
+
+    //Email
+    string[] emailParts = Email.Split('@');
+    string Username = emailParts[0];
+    string Domain = emailParts[1];
+
+    //Salary
+    decimal SalaryPerDay = SalaryPerHour * 8;
+    decimal SalaryPerMonth = SalaryPerDay * 30;
+
+    if (IsTenured)
+    {
+        SalaryPerMonth += 500;
+    }
+
+    //StudentGrade//
+
+    //Student Variables
+    int PrelimGrade = 90;
+    int FinalsGrade = 95;
+    decimal SemGrade = (PrelimGrade + FinalsGrade) / 2.0M;
+    string TransmutedGrade = "";
+
+    if (SemGrade >= 90)
+    {
+        TransmutedGrade = "1.00";
+    }
+    else if (SemGrade >= 85)
+    {
+        TransmutedGrade = "1.25";
+    }
+    else if (SemGrade >= 80)
+    {
+        TransmutedGrade = "1.50";
+    }
+    else if (SemGrade >= 75)
+    {
+        TransmutedGrade = "1.75";
+    }
+    else
+    {
+        TransmutedGrade = "2.00";
+    }
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Machine Problem 1</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+</head>
+<body>
+    <div>
+        <p>I'm @FirstName @LastName and I'm @age yrs. old</p>
+    </div>
+
+    <div>
+        <p>Email: @Email</p>
+        <p>Domain: @Domain</p>
+        <p>Username: @Username</p>
+    </div>
+</body>
+</html>

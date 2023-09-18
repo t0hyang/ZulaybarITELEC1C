@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<InstructorModel>;
+@{
+    <h1>Instructor List</h1>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Rank</th>
+            <th>Hiring Date</th>
+            <th>More Details</th>
+            <th>Edit</th>
+        </tr>
+
+        @foreach (var InstructorModel in Model)
+        {
+            <tr>
+                <td>@InstructorModel.Id</td>
+                <td>@InstructorModel.FirstName @InstructorModel.LastName</td>
+                <td>@(InstructorModel.IsTenured ? "Permanent" : "Probationary")</td>
+                <td>@InstructorModel.Rank</td>
+                <td>@InstructorModel.HiringDate</td>
+                <td><a asp-action="ShowDetails" asp-route-id="@InstructorModel.Id">Show Details</a></td>
+                <td><a asp-action="Edit" asp-route-id="@InstructorModel.Id">Edit</a></td>
+            </tr>
+        }
+
+    </table>
+    <a class="btn btn-primary" asp-action="AddInstructor">Add Instructor</a>
+
+
+}

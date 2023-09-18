@@ -7,8 +7,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\NewFolder2\**" />
+    <Content Remove="Views\NewFolder2\**" />
+    <EmbeddedResource Remove="Views\NewFolder2\**" />
+    <None Remove="Views\NewFolder2\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\HomeController1.cs" />
+    <Compile Remove="Models\Index.cshtml.cs" />
+    <Compile Remove="Models\StudentModel.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Models\Index.cshtml" />
+    <Content Remove="Models\StudentModel.cshtml" />
+    <Content Remove="Views\Home\Employee.cshtml" />
     <Content Remove="Views\Home\Index1.cshtml" />
-    <Content Remove="wwwroot\css\StyleSheet.css" />
+    <Content Remove="Views\Home\Index2.cshtml" />
+    <Content Remove="wwwroot\css\StyleSheet1.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\NewFolder\" />
   </ItemGroup>
 
 </Project>
