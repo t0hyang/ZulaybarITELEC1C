@@ -5,36 +5,36 @@
 }
 @model StudentModel;
 
-<h1>Edit Student</h1>
+<h1>Are you sure?</h1>
 
-<form asp-action="Edit" method="post">
+<form asp-action="Delete" method="post">
     <div class="form-group">
         <label asp-for="Id">ID</label>
-        <input asp-for="Id" class="form-control" />
+        <input asp-for="Id" class="form-control" disabled/>
 
     </div>
     <div class="form-group">
         <label asp-for="FirstName">First Name</label>
-        <input asp-for="FirstName" class="form-control" />
+        <input asp-for="FirstName" class="form-control" disabled />
     </div>
     <div class="form-group">
         <label asp-for="LastName">Last Name</label>
-        <input asp-for="LastName" class="form-control" />
+        <input asp-for="LastName" class="form-control" disabled />
     </div>
     <div class="form-group">
         <label asp-for="Email">Email</label>
-        <input asp-for="Email" class="form-control" />
+        <input asp-for="Email" class="form-control" disabled />
     </div>
     <div class="form-group">
         <label asp-for="Major">Major</label>
-        <select asp-for="Major" asp-items="Html.GetEnumSelectList(typeof(Major))" class="form-control"></select>
+        <select asp-for="Major" asp-items="Html.GetEnumSelectList(typeof(Major))" class="form-control" disabled></select>
     </div>
     <div class="form-group">
         <label asp-for="Birthday">Birthday</label>
-        <input asp-for="Birthday" class="form-control" />
+        <input asp-for="Birthday" class="form-control" disabled />
     </div>
     <br />
-    <button type="submit" class="btn btn-primary">Edit</button>
+    <button type="submit" class="btn btn-danger">Delete</button>
     <button type="button" class="btn btn-secondary" onclick="history.back();">Cancel</button>
 
 </form>

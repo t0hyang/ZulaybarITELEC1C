@@ -1,13 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography.X509Certificates;
 using ZulaybarITELEC1C.Models;
+using ZulaybarITELEC1C.Services;
 namespace InstructorController.Controllers
 {
     public class InstructorController : Controller
     {
+        private readonly IMyFakeDataService _fakeData;
+        public InstructorController(IMyFakeDataService fakeData)
+        {
+            _fakeData = fakeData;
+        }
 
-
-        List<InstructorModel> InstructorList = new List<InstructorModel>()
+        /*List<InstructorModel> InstructorList = new List<InstructorModel>()
             {
             new InstructorModel()
             {
@@ -36,19 +41,19 @@ namespace InstructorController.Controllers
                 Rank = Rank.AssistantProfessor,
                 HiringDate = DateTime.Parse("28/11/2018"),
             },
-              };
+              };*/
 
         public IActionResult Index()
         {
-            return View(InstructorList);
+            return View(_fakeData.InstructorList);
         }
 
         public IActionResult ShowDetails(int id)
         {
-            //Search for the student whose id matches the given id
-            InstructorModel? instructor = InstructorList.FirstOrDefault(st => st.Id == id);
+            
+            InstructorModel? instructor = _fakeData.InstructorList.FirstOrDefault(st => st.Id == id);
 
-            if (instructor != null)//was an student found?
+            if (instructor != null)
                 return View(instructor);
 
             return NotFound();
@@ -61,17 +66,16 @@ namespace InstructorController.Controllers
         [HttpPost]
         public IActionResult AddInstructor(InstructorModel newInstructor)
         {
-            InstructorList.Add(newInstructor);
-            return View("Index", InstructorList);
+            _fakeData.InstructorList.Add(newInstructor);
+            return View("Index", _fakeData.InstructorList);
         }
         //
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            //Search for the student whose id matches the given id
-            InstructorModel? instructor = InstructorList.FirstOrDefault(st => st.Id == id);
+            InstructorModel? instructor = _fakeData.InstructorList.FirstOrDefault(st => st.Id == id);
 
-            if (instructor != null)//was an student found?
+            if (instructor != null)
                 return View(instructor);
 
             return NotFound();
@@ -81,19 +85,47 @@ namespace InstructorController.Controllers
         public IActionResult Edit(InstructorModel updatedInstructor)
         {
 
-            InstructorModel? instructor = InstructorList.FirstOrDefault(st => st.Id == updatedInstructor.Id);
+            InstructorModel? instructor = _fakeData.InstructorList.FirstOrDefault(st => st.Id == updatedInstructor.Id);
 
 
             if (instructor != null)
             {
                 instructor.Id = updatedInstructor.Id;
                 instructor.FirstName = updatedInstructor.FirstName;
+                instructor.LastName = updatedInstructor.LastName;
                 instructor.IsTenured = updatedInstructor.IsTenured;
                 instructor.Rank = updatedInstructor.Rank;
                 instructor.HiringDate = updatedInstructor.HiringDate;
             }  
             
-            return View("Index", InstructorList);
+            return View("Index", _fakeData.InstructorList);
+        }
+
+        //DELETE
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            InstructorModel? instructor = _fakeData.InstructorList.FirstOrDefault(st => st.Id == id);
+
+            if (instructor != null)
+            {
+                return View(instructor);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Delete(InstructorModel deleteInstructor)
+        {
+
+            InstructorModel? instructor = _fakeData.InstructorList.FirstOrDefault(st => st.Id == deleteInstructor.Id);
+            {
+                _fakeData.InstructorList.Remove(instructor);
+                return View("Index", _fakeData.InstructorList);
+            }
         }
     }
 }

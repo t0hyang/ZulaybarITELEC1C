@@ -13,6 +13,7 @@
             <th>Hiring Date</th>
             <th>More Details</th>
             <th>Edit</th>
+            <th>Delete</th>
         </tr>
 
         @foreach (var InstructorModel in Model)
@@ -25,6 +26,7 @@
                 <td>@InstructorModel.HiringDate</td>
                 <td><a asp-action="ShowDetails" asp-route-id="@InstructorModel.Id">Show Details</a></td>
                 <td><a asp-action="Edit" asp-route-id="@InstructorModel.Id">Edit</a></td>
+                <td><a asp-action="Delete" asp-route-id="@InstructorModel.Id">Delete</a></td>
             </tr>
         }
 
