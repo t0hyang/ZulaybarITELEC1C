@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ZulaybarITELEC1C.Data;
 using ZulaybarITELEC1C.Models;
 using ZulaybarITELEC1C.Services;
 
@@ -6,49 +7,20 @@ namespace ZulaybarITELEC1C.Controllers
 {
     public class StudentController : Controller
     {
-        private readonly IMyFakeDataService _fakeData;
-        public StudentController(IMyFakeDataService fakeData)
+        private readonly AppDbContext _dbContext;
+        public StudentController(AppDbContext dbContext)
         {
-            _fakeData = fakeData;
+            _dbContext = dbContext;
         }
-        /*   List<StudentModel> StudentList = new List<StudentModel>()
-               {
-               new StudentModel()
-               {
-                   Id = 1,
-                   FirstName = "Zeia Samantha",
-                   LastName = "Dimaano",
-                   Birthday = DateTime.Parse("08/08/2002"),
-                   Major = Major.BSIT,
-                   Email = "zeiasamantha.dimaano.cics@ust.edu.ph"
-               },
-                new StudentModel()
-                {
-                    Id = 2,
-                    FirstName = "Ricky Carlo",
-                    LastName = "Tiolengco",
-                    Birthday = DateTime.Parse("30/05/2002"),
-                    Major = Major.BSIT,
-                    Email = "rickycarlo.tiolengco.cics@ust.edu.ph"
-                },
-                 new StudentModel()
-                 {
-                     Id = 3,
-                     FirstName = "Jason Rafael",
-                     LastName = "Rodriguez",
-                     Birthday = DateTime.Parse("15/05/2002"),
-                     Major = Major.BSIT,
-                     Email = "jasonrafael.rodriguez.cics@ust.edu.ph"
-                 }
-                 };*/
+        
         public IActionResult Index()
         {
-            return View(_fakeData.StudentList);
+            return View(_dbContext.Students);
         }
         public IActionResult ShowDetails(int id)
         {
             //Search for the student whose id matches the given id
-            StudentModel? student = _fakeData.StudentList.FirstOrDefault(st => st.Id == id);
+            StudentModel? student = _dbContext.Students.FirstOrDefault(st => st.Id == id);
 
             if (student != null)//was an student found?
                 return View(student);
@@ -63,15 +35,16 @@ namespace ZulaybarITELEC1C.Controllers
         [HttpPost]
         public IActionResult AddStudent(StudentModel newStudent)
         {
-            _fakeData.StudentList.Add(newStudent);
-            return View("Index", _fakeData.StudentList);
+            _dbContext.Students.Add(newStudent);
+            _dbContext.SaveChanges();
+            return View("Index", _dbContext.Students);
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
             //Search for the student whose id matches the given id
-            StudentModel? student = _fakeData.StudentList.FirstOrDefault(st => st.Id == id);
+            StudentModel? student = _dbContext.Students.FirstOrDefault(st => st.Id == id);
 
             if (student != null)//was an student found?
                 return View(student);
@@ -83,7 +56,7 @@ namespace ZulaybarITELEC1C.Controllers
         public IActionResult Edit(StudentModel updatedStudent)
         {
 
-            StudentModel? student = _fakeData.StudentList.FirstOrDefault(st => st.Id == updatedStudent.Id);
+            StudentModel? student = _dbContext.Students.FirstOrDefault(st => st.Id == updatedStudent.Id);
 
 
             if (student != null)
@@ -94,14 +67,14 @@ namespace ZulaybarITELEC1C.Controllers
                 student.Birthday = updatedStudent.Birthday;
                 student.Major = updatedStudent.Major;
             }
-
-            return View("Index", _fakeData.StudentList);
+            _dbContext.SaveChanges();
+            return View("Index", _dbContext.Students);
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            StudentModel? student = _fakeData.StudentList.FirstOrDefault(st => st.Id == id);
+            StudentModel? student = _dbContext.Students.FirstOrDefault(st => st.Id == id);
 
             if (student != null)
             {
@@ -116,12 +89,11 @@ namespace ZulaybarITELEC1C.Controllers
         [HttpPost]
         public IActionResult Delete(StudentModel deleteStudent)
         {
-
-            StudentModel? student = _fakeData.StudentList.FirstOrDefault(st => st.Id == deleteStudent.Id);
-            {
-                _fakeData.StudentList.Remove(student);
-                return View("Index", _fakeData.StudentList);
-            }
+            StudentModel? student = _dbContext.Students.FirstOrDefault(st => st.Id == deleteStudent.Id);
+            _dbContext.Students.Remove(student);
+            _dbContext.SaveChanges();
+            return View("Index", _dbContext.Students);
+            
         }
     }
 }

@@ -1,57 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
+using ZulaybarITELEC1C.Data;
 using ZulaybarITELEC1C.Models;
 using ZulaybarITELEC1C.Services;
 namespace InstructorController.Controllers
 {
     public class InstructorController : Controller
     {
-        private readonly IMyFakeDataService _fakeData;
-        public InstructorController(IMyFakeDataService fakeData)
+        private readonly AppDbContext _dbContext;
+        public InstructorController(AppDbContext dbContext)
         {
-            _fakeData = fakeData;
+            _dbContext = dbContext;
         }
-
-        /*List<InstructorModel> InstructorList = new List<InstructorModel>()
-            {
-            new InstructorModel()
-            {
-                Id = 1,
-                FirstName = "Ten",
-                LastName = "Zulaybar",
-                IsTenured = true,
-                Rank = Rank.Professor,
-                HiringDate = DateTime.Parse("09/01/2017"),
-            },
-            new InstructorModel()
-            {
-                Id = 2,
-                FirstName = "Zeia",
-                LastName = "Dimaano",
-                IsTenured = false,
-                Rank = Rank.Instructor,
-                HiringDate = DateTime.Parse("11/08/2022"),
-            },
-            new InstructorModel()
-            {
-                Id = 3,
-                FirstName = "Zeke",
-                LastName = "Gonzalez",
-                IsTenured = true,
-                Rank = Rank.AssistantProfessor,
-                HiringDate = DateTime.Parse("28/11/2018"),
-            },
-              };*/
 
         public IActionResult Index()
         {
-            return View(_fakeData.InstructorList);
+            return View(_dbContext.Instructors);
         }
 
         public IActionResult ShowDetails(int id)
         {
             
-            InstructorModel? instructor = _fakeData.InstructorList.FirstOrDefault(st => st.Id == id);
+            InstructorModel? instructor = _dbContext.Instructors.FirstOrDefault(st => st.Id == id);
 
             if (instructor != null)
                 return View(instructor);
@@ -66,14 +37,15 @@ namespace InstructorController.Controllers
         [HttpPost]
         public IActionResult AddInstructor(InstructorModel newInstructor)
         {
-            _fakeData.InstructorList.Add(newInstructor);
-            return View("Index", _fakeData.InstructorList);
+            _dbContext.Instructors.Add(newInstructor);
+            _dbContext.SaveChanges();
+            return View("Index", _dbContext.Instructors);
         }
         //
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            InstructorModel? instructor = _fakeData.InstructorList.FirstOrDefault(st => st.Id == id);
+            InstructorModel? instructor = _dbContext.Instructors.FirstOrDefault(st => st.Id == id);
 
             if (instructor != null)
                 return View(instructor);
@@ -85,7 +57,7 @@ namespace InstructorController.Controllers
         public IActionResult Edit(InstructorModel updatedInstructor)
         {
 
-            InstructorModel? instructor = _fakeData.InstructorList.FirstOrDefault(st => st.Id == updatedInstructor.Id);
+            InstructorModel? instructor = _dbContext.Instructors.FirstOrDefault(st => st.Id == updatedInstructor.Id);
 
 
             if (instructor != null)
@@ -96,16 +68,16 @@ namespace InstructorController.Controllers
                 instructor.IsTenured = updatedInstructor.IsTenured;
                 instructor.Rank = updatedInstructor.Rank;
                 instructor.HiringDate = updatedInstructor.HiringDate;
-            }  
-            
-            return View("Index", _fakeData.InstructorList);
+            }
+            _dbContext.SaveChanges();
+            return View("Index", _dbContext.Instructors);
         }
 
         //DELETE
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            InstructorModel? instructor = _fakeData.InstructorList.FirstOrDefault(st => st.Id == id);
+            InstructorModel? instructor = _dbContext.Instructors.FirstOrDefault(st => st.Id == id);
 
             if (instructor != null)
             {
@@ -120,12 +92,10 @@ namespace InstructorController.Controllers
         [HttpPost]
         public IActionResult Delete(InstructorModel deleteInstructor)
         {
-
-            InstructorModel? instructor = _fakeData.InstructorList.FirstOrDefault(st => st.Id == deleteInstructor.Id);
-            {
-                _fakeData.InstructorList.Remove(instructor);
-                return View("Index", _fakeData.InstructorList);
-            }
+            InstructorModel? instructor = _dbContext.Instructors.FirstOrDefault(st => st.Id == deleteInstructor.Id);
+            _dbContext.Instructors.Remove(instructor);
+            _dbContext.SaveChanges();
+            return View("Index", _dbContext.Instructors);
         }
     }
 }
