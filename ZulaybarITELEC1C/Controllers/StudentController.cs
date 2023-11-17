@@ -35,6 +35,10 @@ namespace ZulaybarITELEC1C.Controllers
         [HttpPost]
         public IActionResult AddStudent(StudentModel newStudent)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             _dbContext.Students.Add(newStudent);
             _dbContext.SaveChanges();
             return View("Index", _dbContext.Students);

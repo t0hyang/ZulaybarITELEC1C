@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
 using ZulaybarITELEC1C.Data;
@@ -14,6 +15,7 @@ namespace InstructorController.Controllers
             _dbContext = dbContext;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View(_dbContext.Instructors);
@@ -34,12 +36,17 @@ namespace InstructorController.Controllers
         {
             return View();
         }
+        [Authorize]
         [HttpPost]
         public IActionResult AddInstructor(InstructorModel newInstructor)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             _dbContext.Instructors.Add(newInstructor);
             _dbContext.SaveChanges();
-            return View("Index", _dbContext.Instructors);
+            return RedirectToAction("InstructorModel");
         }
         //
         [HttpGet]
@@ -67,6 +74,7 @@ namespace InstructorController.Controllers
                 instructor.LastName = updatedInstructor.LastName;
                 instructor.IsTenured = updatedInstructor.IsTenured;
                 instructor.Rank = updatedInstructor.Rank;
+                instructor.Phone = updatedInstructor.Phone;
                 instructor.HiringDate = updatedInstructor.HiringDate;
             }
             _dbContext.SaveChanges();

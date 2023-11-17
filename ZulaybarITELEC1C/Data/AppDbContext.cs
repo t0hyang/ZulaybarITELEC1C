@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using ZulaybarITELEC1C.Models;
 
 namespace ZulaybarITELEC1C.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<User>
     {
         public DbSet<StudentModel> Students { get; set; }
 
@@ -53,6 +54,7 @@ namespace ZulaybarITELEC1C.Data
                     FirstName = "Ten",
                     LastName = "Zulaybar",
                     IsTenured = true,
+                    Phone = "00-1111-1112",
                     Rank = Rank.Professor,
                     HiringDate = DateTime.Parse("09/01/2017"),
                 },
@@ -62,6 +64,7 @@ namespace ZulaybarITELEC1C.Data
                     FirstName = "Zeia",
                     LastName = "Dimaano",
                     IsTenured = false,
+                    Phone = "00-2222-2222",
                     Rank = Rank.Instructor,
                     HiringDate = DateTime.Parse("11/08/2022"),
                 },
@@ -71,10 +74,12 @@ namespace ZulaybarITELEC1C.Data
                     FirstName = "Zeke",
                     LastName = "Gonzalez",
                     IsTenured = true,
+                    Phone = "00-1111-1111",
                     Rank = Rank.AssistantProfessor,
                     HiringDate = DateTime.Parse("28/11/2018")
                 }
                 );
+
 
         }
     }
